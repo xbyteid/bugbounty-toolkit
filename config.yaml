@@ -1,0 +1,72 @@
+# Bug Bounty Target Configuration
+# Only test targets you are AUTHORIZED to test
+
+targets:
+  # Indonesian Bug Bounty Programs
+  - name: Tokopedia
+    platform: HackerOne
+    url: https://hackerone.com/tokopedia
+    scope:
+      - "*.tokopedia.com"
+    payout: "$50 - $2,000+"
+    status: active
+
+  - name: Gojek/GoTo
+    platform: HackerOne
+    url: https://hackerone.com/gojek
+    scope:
+      - "*.gojek.com"
+      - "*.gojek.io"
+      - "*.gopay.co.id"
+    payout: "$100 - $5,000+"
+    status: active
+
+  - name: Traveloka
+    platform: Bugcrowd
+    url: https://bugcrowd.com/traveloka
+    scope:
+      - "*.traveloka.com"
+    payout: "$50 - $1,500+"
+    status: active
+
+  - name: Bukalapak
+    platform: HackerOne
+    url: https://hackerone.com/bukalapak
+    scope:
+      - "*.bukalapak.com"
+    payout: "$50 - $1,000+"
+    status: active
+
+  - name: Shopee ID
+    platform: HackerOne (private)
+    url: https://hackerone.com/shopee
+    scope:
+      - "*.shopee.co.id"
+    payout: "$100 - $10,000+"
+    status: active
+
+  - name: Tokocrypto
+    platform: HackerOne
+    url: https://hackerone.com/tokocrypto
+    scope:
+      - "*.tokocrypto.com"
+    payout: "varies"
+    status: active
+
+  - name: Grab
+    platform: HackerOne
+    url: https://hackerone.com/grab
+    scope:
+      - "*.grab.com"
+      - "*.grabtaxi.com"
+    payout: "$100 - $5,000+"
+    status: active
+
+# Scanner settings
+settings:
+  threads: 10
+  timeout: 10
+  rate_limit: 2  # seconds between requests (be polite)
+  user_agent: "BugBounty-Research/1.0 (Authorized Testing Only)"
+  output_dir: "./output"
+  wordlists_dir: "./wordlists"
