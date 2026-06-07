@@ -91,12 +91,18 @@ async def check_subdomain(session, domain, subdomain, resolver, timeout=5):
         return None
 
 
-async def enumerate_subdomains(domain, threads=50, custom_wordlist=None):
+async def enumerate_subdomains(domain, threads=50, custom_wordlist=None, use_big_wordlist=False):
     """Enumerate subdomains for a given domain."""
     wordlist = SUBDOMAIN_WORDLIST
     if custom_wordlist:
         with open(custom_wordlist, 'r') as f:
             wordlist = [line.strip() for line in f if line.strip()]
+    elif use_big_wordlist:
+        big_list = os.path.join(os.path.dirname(__file__), 'wordlists', 'subdomains.txt')
+        if os.path.exists(big_list):
+            with open(big_list, 'r') as f:
+                wordlist = [line.strip() for line in f if line.strip()]
+            console.print(f"[dim]Using big wordlist: {len(wordlist)} entries[/]")
 
     resolver = dns.resolver.Resolver()
     resolver.timeout = 5
@@ -193,16 +199,19 @@ async def main():
     domain = sys.argv[1]
     custom_wordlist = None
     threads = 50
+    use_big = False
 
     for i, arg in enumerate(sys.argv):
         if arg == "--threads" and i + 1 < len(sys.argv):
             threads = int(sys.argv[i + 1])
+        elif arg == "--big":
+            use_big = True
         elif i > 1 and not arg.startswith("--") and arg != domain:
             if os.path.isfile(arg):
                 custom_wordlist = arg
 
     start = time.time()
-    results = await enumerate_subdomains(domain, threads, custom_wordlist)
+    results = await enumerate_subdomains(domain, threads, custom_wordlist, use_big)
     elapsed = time.time() - start
 
     display_results(domain, results)

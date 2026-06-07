@@ -29,12 +29,15 @@ BANNER = """
 MENU = """
 [bold cyan]Available Tools:[/]
 
-  [bold green]1[/] 🔍  [bold]Subdomain Enumeration[/]     — Find subdomains via DNS bruteforce
-  [bold green]2[/] 🔌  [bold]Quick Recon[/]               — Port scan + tech fingerprint + headers
-  [bold green]3[/] ⚠️   [bold]Vulnerability Scanner[/]     — SQLi, XSS, Open Redirect, SSTI, CORS
-  [bold green]4[/] 📁  [bold]Sensitive File Scanner[/]     — Check for .env, .git, backups, configs
-  [bold green]5[/] 🔒  [bold]SSL/TLS Analysis[/]          — Certificate details + cipher info
-  [bold green]6[/] 🎯  [bold]Full Scan (All Tools)[/]      — Run everything on a target
+  [bold green]1[/] 🔍  [bold]Subdomain Enumeration[/]     — DNS bruteforce (310 or 52K wordlist)
+  [bold green]2[/] 📜  [bold]Certificate Transparency[/]  — crt.sh subdomain discovery
+  [bold green]3[/] 🔌  [bold]Quick Recon[/]               — Port scan + tech fingerprint + headers
+  [bold green]4[/] ⚠️   [bold]Vulnerability Scanner[/]     — SQLi, XSS, Open Redirect, SSTI, CORS
+  [bold green]5[/] 📦  [bold]S3 Bucket Scanner[/]         — Check S3/AWS bucket misconfigurations
+  [bold green]6[/] 🔗  [bold]GraphQL Scanner[/]           — Introspection, sensitive queries, IDOR
+  [bold green]7[/] 📁  [bold]Sensitive File Scanner[/]     — Check for .env, .git, backups, configs
+  [bold green]8[/] 🔒  [bold]SSL/TLS Analysis[/]          — Certificate details + cipher info
+  [bold green]9[/] 🎯  [bold]Full Scan (All Tools)[/]      — Run everything on a target
 
   [bold red]0[/] ❌  Exit
 
@@ -57,9 +60,9 @@ INDONESIAN_TARGETS = """
 """
 
 
-async def run_subdomains(domain):
+async def run_subdomains(domain, use_big=False):
     from subdomains import enumerate_subdomains, display_results, save_results
-    results = await enumerate_subdomains(domain)
+    results = await enumerate_subdomains(domain, use_big_wordlist=use_big)
     display_results(domain, results)
     save_results(domain, results)
 
@@ -117,7 +120,7 @@ async def main():
     while True:
         console.print(MENU)
 
-        choice = console.input("[bold yellow]Select tool (0-6): [/]").strip()
+        choice = console.input("[bold yellow]Select tool (0-9): [/]").strip()
 
         if choice == "0":
             console.print("[dim]Goodbye! 🎯[/]")
@@ -126,21 +129,46 @@ async def main():
         elif choice == "1":
             domain = console.input("[cyan]Target domain: [/]").strip()
             if domain:
-                await run_subdomains(domain)
+                big = console.input("[cyan]Use big wordlist? (52K entries) [y/N]: [/]").strip().lower()
+                if big == 'y':
+                    await run_subdomains(domain, use_big=True)
+                else:
+                    await run_subdomains(domain)
 
         elif choice == "2":
+            domain = console.input("[cyan]Target domain: [/]").strip()
+            if domain:
+                from crtsh import query_crtsh, display_results as crtsh_display, save_results as crtsh_save
+                results = await query_crtsh(domain)
+                crtsh_display(domain, results)
+                crtsh_save(domain, results)
+
+        elif choice == "3":
             console.print(INDONESIAN_TARGETS)
             target = console.input("[cyan]Target URL/domain: [/]").strip()
             if target:
                 await run_recon(target)
 
-        elif choice == "3":
+        elif choice == "4":
             console.print(INDONESIAN_TARGETS)
             target = console.input("[cyan]Target URL (with params for SQLi/XSS): [/]").strip()
             if target:
                 await run_vulnscan(target)
 
-        elif choice == "4":
+        elif choice == "5":
+            target = console.input("[cyan]S3 bucket name or URL: [/]").strip()
+            if target:
+                from s3scanner import scan_bucket, display_results as s3_display
+                result = await scan_bucket(target)
+                s3_display([result])
+
+        elif choice == "6":
+            target = console.input("[cyan]Target URL with GraphQL endpoint: [/]").strip()
+            if target:
+                from graphql_scan import scan_graphql
+                await scan_graphql(target)
+
+        elif choice == "7":
             target = console.input("[cyan]Target URL: [/]").strip()
             if target:
                 from vulnscan import scan_sensitive_paths, display_findings, save_findings
@@ -154,14 +182,14 @@ async def main():
                     if findings:
                         save_findings(findings)
 
-        elif choice == "5":
+        elif choice == "8":
             domain = console.input("[cyan]Target domain: [/]").strip()
             if domain:
                 from recon import check_ssl, display_ssl
                 ssl_info = await check_ssl(domain)
                 display_ssl(ssl_info)
 
-        elif choice == "6":
+        elif choice == "9":
             console.print(INDONESIAN_TARGETS)
             target = console.input("[cyan]Target URL/domain: [/]").strip()
             if target:

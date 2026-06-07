@@ -31,13 +31,25 @@ python3 vulnscan.py "https://target.com/page?id=1"
 
 ### 1. Subdomain Enumeration (`subdomains.py`)
 ```bash
-python3 subdomains.py <domain> [wordlist] [--threads N]
+python3 subdomains.py <domain>                    # Quick (310 entries)
+python3 subdomains.py <domain> --big               # Deep (52K entries)
+python3 subdomains.py <domain> --threads 200       # Custom threads
+python3 subdomains.py <domain> custom_wordlist.txt # Custom wordlist
 ```
-- DNS bruteforce with 310+ common subdomains
+- DNS bruteforce with 310 (quick) or 52,128 (deep) entries
 - Async, multi-threaded
 - Results saved to `./output/`
 
-### 2. Quick Recon (`recon.py`)
+### 2. Certificate Transparency (`crtsh.py`) 🆕
+```bash
+python3 crtsh.py <domain>
+python3 crtsh.py <domain> -j  # JSON output
+```
+- Query crt.sh for subdomain certificates
+- Find subdomains missed by DNS bruteforce
+- Deduplication and wildcard expansion
+
+### 3. Quick Recon (`recon.py`)
 ```bash
 python3 recon.py <target>
 ```
@@ -47,7 +59,7 @@ python3 recon.py <target>
 - SSL certificate check
 - Common sensitive paths
 
-### 3. Vulnerability Scanner (`vulnscan.py`)
+### 4. Vulnerability Scanner (`vulnscan.py`)
 ```bash
 python3 vulnscan.py <target>
 ```
@@ -57,11 +69,33 @@ python3 vulnscan.py <target>
 - **CORS** — Misconfiguration detection
 - **Sensitive Files** — .env, .git, backups, configs
 
-### 4. Main CLI (`bounty.py`)
+### 5. S3 Bucket Scanner (`s3scanner.py`) 🆕
+```bash
+python3 s3scanner.py -b <bucket-name>
+python3 s3scanner.py -b <bucket-name> -j  # JSON output
+```
+- Check bucket listing enabled
+- Check public write access
+- Check ACL permissions
+- Enumerate bucket contents
+- Detect sensitive files (.env, .sql, .key, .pem)
+
+### 6. GraphQL Scanner (`graphql_scan.py`) 🆕
+```bash
+python3 graphql_scan.py <target>
+python3 graphql_scan.py <target> -o results.json
+```
+- Detect GraphQL endpoints
+- Run introspection query
+- Enumerate types/queries/mutations
+- Detect sensitive operations
+- Test for IDOR vulnerabilities
+
+### 7. Main CLI (`bounty.py`)
 ```bash
 python3 bounty.py
 ```
-- Interactive menu for all tools
+- Interactive menu for all 9 tools
 - Indonesian target reference list
 - Full scan mode (all tools combined)
 
