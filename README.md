@@ -1,4 +1,4 @@
-# 🎯 Bug Bounty Recon Toolkit
+# Bug Bounty Recon Toolkit
 
 Automated recon toolkit for authorized bug bounty testing on Indonesian platforms.
 
@@ -7,10 +7,10 @@ Automated recon toolkit for authorized bug bounty testing on Indonesian platform
 **Only use against targets you are AUTHORIZED to test.**
 
 Unauthorized testing is illegal under:
-- Indonesian UU ITE (UU No. 11/2008) — ancaman penjara 6-12 tahun
+- Indonesian UU ITE (UU No. 11/2008)
 - Computer Misuse Act (various jurisdictions)
 
-Always register on the bug bounty platform (HackerOne/Bugcrowd) and read the program's scope/policy BEFORE testing.
+Always register on the bug bounty platform and read the program's scope/policy BEFORE testing.
 
 ## 🚀 Quick Start
 
@@ -69,13 +69,13 @@ python3 bounty.py
 
 | Company | Platform | Scope | Payout |
 |---------|----------|-------|--------|
-| Tokopedia | HackerOne | *.tokopedia.com | $50-2,000+ |
+| Tokopedia | bounty.tokopedia.net (CLOSED) | *.tokopedia.com | N/A |
 | Gojek/GoTo | HackerOne | *.gojek.com, GoPay | $100-5,000+ |
 | Traveloka | Bugcrowd | *.traveloka.com | $50-1,500+ |
 | Bukalapak | HackerOne | *.bukalapak.com | $50-1,000+ |
-| Shopee ID | HackerOne | *.shopee.co.id | $100-10,000+ |
+| Shopee ID | Email (security@shopee.com) | *.shopee.co.id | varies |
+| Grab | HackerOne | *.grab.com, *.grabtaxi.com | $100-5,000+ |
 | Tokocrypto | HackerOne | *.tokocrypto.com | varies |
-| Grab | HackerOne | *.grab.com | $100-5,000+ |
 
 ## 📁 Output
 
@@ -113,3 +113,28 @@ All results saved to `./output/` as JSON:
 9. Wait for triage (usually 1-7 days)
 10. Get paid 💰
 ```
+
+## 🏆 Findings (June 2026)
+
+### Tokopedia
+- **Staging environment accessible via direct IP bypass**
+- Hardcoded OAuth/Facebook/Google API keys in client-side JS
+- Internal endpoints leaked (accounts, pay, chat, seller, SSE)
+- Consul feature flag templates rendered client-side
+- Status: Reported to security@bytedance.com
+
+### Grab
+- **S3 bucket `bpa-public-resources` fully public on cdn.grab-bat.net**
+- 1000+ files including merchant data, legal docs, OTP source code
+- Internal project folders (batman-avatar-log, bpia-6685)
+- Country-specific marketing materials (ID, MY, TH, VN, SG)
+- Status: Reported via HackerOne (Report #4780199)
+
+### Shopee
+- **UAT environment (uat.shopee.co.id) publicly accessible**
+- Shopee CCMS App Key & Secret hardcoded
+- Google Maps API keys (Live + NonLive) exposed
+- Git SHA and branch name leaked
+- CORS wildcard (Access-Control-Allow-Origin: *)
+- CSP reveals internal UAT domains (AirPay, Korea, China)
+- Status: Reported to security@shopee.com
