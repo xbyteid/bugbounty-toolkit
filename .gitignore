@@ -4,3 +4,12 @@ __pycache__/
 output/
 *.json
 .DS_Store
+
+# Sensitive reports — NEVER commit to public repo
+reports/
+*.log
+/tmp/
+.env
+*secret*
+*token*
+*password*
