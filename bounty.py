@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-Bug Bounty Toolkit v3.0 — SUPER OP Edition
-18 tools for finding critical vulnerabilities
+Bug Bounty Toolkit v4.0 — ULTRA OP Edition
+24 tools for finding critical vulnerabilities
 
 Tools:
-  RECON:     subdomains, crtsh, recon, full_recon
-  SCANNERS:  vulnscan, graphql, s3, cors, ssrf, redirect, fuzz
-  SECRETS:   secrets, takeover
-  CRITICAL:  jwt, acl, race, sensitive
-  ULTIMATE:  full (everything)
+  RECON:       subdomains, crtsh, recon, full_recon, tech_detect, favicon_hash
+  SCANNERS:    vulnscan, graphql, s3, cors, ssrf, redirect, fuzz, crlf, waf
+  SECRETS:     secrets, takeover
+  CRITICAL:    jwt, acl, race, sensitive, param_miner
+  INFRA:       email_security, tech_detect, favicon_hash, waf
+  ULTIMATE:    full (everything)
 """
 
 import os
@@ -22,7 +23,7 @@ requests.packages.urllib3.disable_warnings()
 
 BANNER = """
 ╔══════════════════════════════════════════════════════════════╗
-║           🛡️  BUG BOUNTY TOOLKIT v3.0 — SUPER OP  🛡️       ║
+║           🛡️  BUG BOUNTY TOOLKIT v4.0 — ULTRA OP  🛡️       ║
 ║              github.com/xbyteid                             ║
 ╠══════════════════════════════════════════════════════════════╣
 ║                                                              ║
@@ -47,13 +48,21 @@ BANNER = """
 ║    12.  🌐 SSRF Scanner                                      ║
 ║    13.  🔍 Parameter & Endpoint Fuzzer                       ║
 ║                                                              ║
-║  💀 SUPER OP TOOLS (NEW!):                                   ║
+║  💀 SUPER OP TOOLS:                                          ║
 ║    14.  🔐 JWT Analyzer & Forger                             ║
 ║    15.  🔓 Broken Access Control (IDOR + Priv Esc)           ║
 ║    16.  🏁 Race Condition Tester                             ║
 ║    17.  📁 Sensitive File Scanner (.env, .git, backups)      ║
 ║                                                              ║
-║    18.  💣 FULL SCAN (everything combined)                   ║
+║  🆕 NEW v4.0 TOOLS:                                         ║
+║    18.  🛡️  WAF Detection & Bypass Suggestions               ║
+║    19.  📧 Email Security (SPF/DKIM/DMARC)                   ║
+║    20.  💉 CRLF Injection Scanner                            ║
+║    21.  ⛏️  Hidden Parameter Miner                            ║
+║    22.  💻 Technology & CMS Detection                        ║
+║    23.  🌐 Favicon Hash (Shodan/Censys)                      ║
+║                                                              ║
+║    24.  💣 FULL SCAN (everything combined)                   ║
 ║                                                              ║
 ║     0. Exit                                                  ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -69,7 +78,7 @@ def full_scan(url):
     domain = parsed.netloc
     
     print(f"\n{'='*60}")
-    print(f"💣 FULL SUPER OP SCAN — {domain}")
+    print(f"💣 FULL ULTRA OP SCAN — {domain}")
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"{'='*60}\n")
     
@@ -80,18 +89,24 @@ def full_scan(url):
         ("📡 PHASE 1: SUBDOMAIN ENUM", f"{py} {scripts_dir}/subdomains.py {domain}"),
         ("📡 PHASE 2: CERTIFICATE TRANSPARENCY", f"{py} {scripts_dir}/crtsh.py {domain}"),
         ("📡 PHASE 3: PORT SCAN + FINGERPRINT", f"{py} {scripts_dir}/recon.py {domain}"),
-        ("🔑 PHASE 4: JS SECRET SCANNER", f"{py} {scripts_dir}/js_secret_scanner.py {url}"),
-        ("🏴‍☠️ PHASE 5: SUBDOMAIN TAKEOVER", f"{py} {scripts_dir}/subdomain_takeover.py {domain}"),
-        ("📁 PHASE 6: SENSITIVE FILES", f"{py} {scripts_dir}/sensitive_scanner.py {url}"),
-        ("🔀 PHASE 7: CORS SCANNING", f"{py} {scripts_dir}/cors_scanner.py {url}"),
-        ("↗️  PHASE 8: OPEN REDIRECT", f"{py} {scripts_dir}/open_redirect.py {url}"),
-        ("🌐 PHASE 9: SSRF SCANNING", f"{py} {scripts_dir}/ssrf_scanner.py {url}"),
-        ("🔓 PHASE 10: ACCESS CONTROL (IDOR)", f"{py} {scripts_dir}/access_control.py {url}"),
-        ("🔐 PHASE 11: JWT ANALYSIS", f"{py} {scripts_dir}/jwt_analyzer.py {url}"),
-        ("🏁 PHASE 12: RACE CONDITIONS", f"{py} {scripts_dir}/race_condition.py {url}"),
-        ("🔍 PHASE 13: PARAMETER FUZZING", f"{py} {scripts_dir}/param_fuzzer.py {url}"),
-        ("🐛 PHASE 14: VULNERABILITY SCAN", f"{py} {scripts_dir}/vulnscan.py {url}"),
-        ("🔗 PHASE 15: GRAPHQL SCAN", f"{py} {scripts_dir}/graphql_scan.py {url}"),
+        ("💻 PHASE 4: TECHNOLOGY DETECTION", f"{py} {scripts_dir}/tech_detect.py {url}"),
+        ("🛡️  PHASE 5: WAF DETECTION", f"{py} {scripts_dir}/waf_detect.py {url}"),
+        ("🌐 PHASE 6: FAVICON HASH", f"{py} {scripts_dir}/favicon_hash.py {url}"),
+        ("📧 PHASE 7: EMAIL SECURITY", f"{py} {scripts_dir}/email_security.py {domain}"),
+        ("🔑 PHASE 8: JS SECRET SCANNER", f"{py} {scripts_dir}/js_secret_scanner.py {url}"),
+        ("🏴‍☠️ PHASE 9: SUBDOMAIN TAKEOVER", f"{py} {scripts_dir}/subdomain_takeover.py {domain}"),
+        ("📁 PHASE 10: SENSITIVE FILES", f"{py} {scripts_dir}/sensitive_scanner.py {url}"),
+        ("🔀 PHASE 11: CORS SCANNING", f"{py} {scripts_dir}/cors_scanner.py {url}"),
+        ("↗️  PHASE 12: OPEN REDIRECT", f"{py} {scripts_dir}/open_redirect.py {url}"),
+        ("🌐 PHASE 13: SSRF SCANNING", f"{py} {scripts_dir}/ssrf_scanner.py {url}"),
+        ("💉 PHASE 14: CRLF INJECTION", f"{py} {scripts_dir}/crlf_scanner.py {url}"),
+        ("⛏️  PHASE 15: PARAMETER MINING", f"{py} {scripts_dir}/param_miner.py {url}"),
+        ("🔓 PHASE 16: ACCESS CONTROL (IDOR)", f"{py} {scripts_dir}/access_control.py {url}"),
+        ("🔐 PHASE 17: JWT ANALYSIS", f"{py} {scripts_dir}/jwt_analyzer.py {url}"),
+        ("🏁 PHASE 18: RACE CONDITIONS", f"{py} {scripts_dir}/race_condition.py {url}"),
+        ("🔍 PHASE 19: PARAMETER FUZZING", f"{py} {scripts_dir}/param_fuzzer.py {url}"),
+        ("🐛 PHASE 20: VULNERABILITY SCAN", f"{py} {scripts_dir}/vulnscan.py {url}"),
+        ("🔗 PHASE 21: GRAPHQL SCAN", f"{py} {scripts_dir}/graphql_scan.py {url}"),
     ]
     
     for name, cmd in phases:
@@ -101,7 +116,7 @@ def full_scan(url):
         os.system(cmd)
     
     print(f"\n{'='*60}")
-    print(f"✅ FULL SUPER OP SCAN COMPLETE")
+    print(f"✅ FULL ULTRA OP SCAN COMPLETE")
     print(f"Finished: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Results in ./output/")
     print(f"{'='*60}\n")
@@ -111,7 +126,7 @@ def main():
     
     while True:
         try:
-            choice = input("\n🎯 Select tool (0-18): ").strip()
+            choice = input("\n🎯 Select tool (0-24): ").strip()
             
             if choice == "0":
                 print("👋 Bye!")
@@ -160,6 +175,22 @@ def main():
             elif choice == "17":
                 run_tool("sensitive_scanner.py", input("URL: ").strip())
             elif choice == "18":
+                run_tool("waf_detect.py", input("URL: ").strip())
+            elif choice == "19":
+                run_tool("email_security.py", input("Domain: ").strip())
+            elif choice == "20":
+                run_tool("crlf_scanner.py", input("URL: ").strip())
+            elif choice == "21":
+                u = input("URL: ").strip()
+                d = input("Deep? (y/N): ").strip().lower()
+                run_tool("param_miner.py", f"{u} {'--deep' if d=='y' else ''}")
+            elif choice == "22":
+                run_tool("tech_detect.py", input("URL: ").strip())
+            elif choice == "23":
+                u = input("URL: ").strip()
+                s = input("Shodan query? (y/N): ").strip().lower()
+                run_tool("favicon_hash.py", f"{u} {'--shodan-query' if s=='y' else ''}")
+            elif choice == "24":
                 full_scan(input("URL: ").strip())
             else:
                 print("❌ Invalid choice")
@@ -183,6 +214,10 @@ if __name__ == "__main__":
             "ssrf": "ssrf_scanner.py", "fuzz": "param_fuzzer.py",
             "jwt": "jwt_analyzer.py", "acl": "access_control.py",
             "race": "race_condition.py", "sensitive": "sensitive_scanner.py",
+            # NEW v4.0
+            "waf": "waf_detect.py", "email": "email_security.py",
+            "crlf": "crlf_scanner.py", "paramminer": "param_miner.py",
+            "tech": "tech_detect.py", "favicon": "favicon_hash.py",
             "full": None,
         }
         

@@ -1,6 +1,6 @@
-# 🛡️ Bug Bounty Toolkit v3.0 — SUPER OP Edition
+# 🛡️ Bug Bounty Toolkit v4.0 — ULTRA OP Edition
 
-18 tools for finding critical vulnerabilities in bug bounty programs.
+24 tools for finding critical vulnerabilities in bug bounty programs.
 
 ## 🚀 Quick Start
 
@@ -16,6 +16,8 @@ python3 bounty.py full URL  # Full scan everything
 | Subdomains | `bounty.py subdomains domain.com` | Enumerate subdomains (52K wordlist) |
 | CRT.sh | `bounty.py crtsh domain.com` | Certificate Transparency discovery |
 | Recon | `bounty.py recon domain.com` | Port scan + tech fingerprint |
+| Tech Detect | `bounty.py tech URL` | 🆕 Technology & CMS fingerprinting |
+| Favicon Hash | `bounty.py favicon URL` | 🆕 Shodan/Censys favicon hash |
 
 ## 🐛 Scanners
 
@@ -39,9 +41,10 @@ python3 bounty.py full URL  # Full scan everything
 | CORS | `bounty.py cors URL` | CORS misconfiguration scanner |
 | Redirect | `bounty.py redirect URL` | Open redirect for OAuth hijack |
 | SSRF | `bounty.py ssrf URL` | Server-Side Request Forgery |
+| CRLF | `bounty.py crlf URL` | 🆕 CRLF injection scanner |
 | Fuzzer | `bounty.py fuzz URL` | Hidden endpoints + IDOR params |
 
-## 💀 SUPER OP Tools (v3.0)
+## 💀 SUPER OP Tools
 
 | Tool | Command | Description |
 |------|---------|-------------|
@@ -49,6 +52,18 @@ python3 bounty.py full URL  # Full scan everything
 | Access Control | `bounty.py acl URL` | IDOR, priv esc, mass assignment |
 | Race Condition | `bounty.py race URL` | Concurrent request testing |
 | Sensitive Files | `bounty.py sensitive URL` | .env, .git, backups, configs |
+| Param Miner | `bounty.py paramminer URL` | 🆕 Hidden parameter discovery |
+
+## 🆕 NEW v4.0 Tools
+
+| Tool | Command | Description |
+|------|---------|-------------|
+| WAF Detect | `bounty.py waf URL` | WAF fingerprint + bypass tips |
+| Email Security | `bounty.py email domain` | SPF/DKIM/DMARC checker |
+| CRLF Scanner | `bounty.py crlf URL` | CRLF injection testing |
+| Param Miner | `bounty.py paramminer URL` | Hidden param discovery (wordlist) |
+| Tech Detect | `bounty.py tech URL` | 100+ tech/CMS fingerprinting |
+| Favicon Hash | `bounty.py favicon URL` | Shodan/Censys infra discovery |
 
 ## 💣 Full Scan
 
@@ -56,7 +71,7 @@ python3 bounty.py full URL  # Full scan everything
 python3 bounty.py full https://target.com
 ```
 
-Runs ALL 15 tools in sequence. Takes 10-30 minutes per target.
+Runs ALL 21 scanning phases. Takes 15-45 minutes per target.
 
 ## 📦 Output
 
