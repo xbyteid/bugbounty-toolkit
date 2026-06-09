@@ -113,6 +113,20 @@ python3 bounty.py full URL  # Full scan everything
 | jwt_tool | latest | JWT cracking/analysis |
 | arjun | v2.2.7 | Hidden parameter discovery |
 
+## 🔎 New in v10.3
+
+| Tool | Type | Description |
+|------|------|-------------|
+| SecretFinder | Python | JS endpoint & secret extraction (API keys, tokens) |
+| ParamSpider | Python | Mining parameters from web archives |
+| Corsy | Python | CORS misconfiguration scanner |
+| Oralyzer | Python | Open redirect tester |
+| SecLists | Wordlists | 2.5GB — fuzzing, brute force, discovery |
+| wafw00f | Python | WAF fingerprint & detection |
+| git-dumper | Python | Dump exposed .git directories |
+| subjack | Go | Subdomain takeover detection |
+| S3Scanner | Python | AWS S3 bucket scanner |
+
 ## 🌐 Browser Automation
 
 | Tool | Description |
