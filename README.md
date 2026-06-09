@@ -1,8 +1,8 @@
-# 🛡️ Bug Bounty Toolkit v9.0 — Full Arsenal Edition
+# 🛡️ Bug Bounty Toolkit v10.1 — Full Arsenal Edition
 
-60+ tools for finding critical vulnerabilities in bug bounty programs.
+69+ tools for finding critical vulnerabilities in bug bounty programs.
 
-31 custom Python scripts + 19 Go/binary tools + 6 system tools + stealth browser automation.
+31 custom Python scripts + 17 Go/binary tools + 9 cloned repos + 6 system tools + stealth browser automation.
 
 ## 🚀 Quick Start
 
@@ -63,6 +63,19 @@ python3 bounty.py full URL  # Full scan everything
 | WAF Detect | `bounty.py waf URL` | WAF fingerprint + bypass tips |
 | Sensitive Files | `bounty.py sensitive URL` | .env, .git, backups, configs |
 
+## 🆕 New in v10.0–v10.1
+
+| Tool | Type | Description |
+|------|------|-------------|
+| Holehe | Python (pip) | Email OSINT — check registrations across 120+ sites |
+| Scrapling | Python (pip) | Undetectable web scraper with anti-bot bypass |
+| Porch-Pirate | Python (pip) | Postman collection OSINT — dump secrets from public workspaces |
+| cloud_enum | Python | Multi-cloud enumeration (AWS S3, Azure Blobs, GCP) |
+| CloakQuest3r | Python | Uncover real IP behind Cloudflare & other CDNs |
+| Nomore403 | Go | Automated 403/40X bypass techniques (path mutation, header injection) |
+| SqliSniper | Python | Time-based blind SQLi fuzzer for HTTP headers |
+| cvemap | Go | CVE search & filter with powerful queries (ProjectDiscovery) |
+
 ## 🛠️ External Go/Binary Tools
 
 | Tool | Version | Description |
@@ -74,10 +87,10 @@ python3 bounty.py full URL  # Full scan everything
 | katana | latest | Web crawler |
 | ffuf | v2.1.0 | Web fuzzer |
 | dalfox | v2.13.0 | XSS scanner |
-| gitleaks | **v8.30.1** | Git secret scanner |
-| trufflehog | **v3.88.24** | Deep secret scanning |
-| rustscan | **v2.3.0** | Fast port scanner |
-| feroxbuster | **v2.11.0** | Content discovery |
+| gitleaks | v8.30.1 | Git secret scanner |
+| trufflehog | v3.88.24 | Deep secret scanning |
+| rustscan | v2.3.0 | Fast port scanner |
+| feroxbuster | v2.11.0 | Content discovery |
 | gobuster | v3.8.2 | Directory/DNS brute-force |
 | anew | latest | Append unique lines |
 | notify | latest | Push notifications (Telegram/Discord) |
@@ -86,6 +99,8 @@ python3 bounty.py full URL  # Full scan everything
 | gau | v2.2.4 | URL fetcher (Wayback/CommonCrawl) |
 | dnsx | latest | DNS toolkit |
 | uncover | v1.2.1 | Attack surface discovery |
+| cvemap | latest | CVE search & filter |
+| nomore403 | latest | 403/40X bypass |
 
 ## 🔧 System Tools
 
