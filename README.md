@@ -1,8 +1,8 @@
-# 🛡️ Bug Bounty Toolkit v10.1 — Full Arsenal Edition
+# 🛡️ Bug Bounty Toolkit v11.0 — Full Arsenal Edition
 
-69+ tools for finding critical vulnerabilities in bug bounty programs.
+90+ tools for finding critical vulnerabilities in bug bounty programs.
 
-31 custom Python scripts + 17 Go/binary tools + 9 cloned repos + 6 system tools + stealth browser automation.
+31 custom Python scripts + 18 Go/binary tools + 17 cloned repos + 8 system tools + stealth browser automation.
 
 ## 🚀 Quick Start
 
@@ -101,6 +101,7 @@ python3 bounty.py full URL  # Full scan everything
 | uncover | v1.2.1 | Attack surface discovery |
 | cvemap | latest | CVE search & filter |
 | nomore403 | latest | 403/40X bypass |
+| alterx | latest | Subdomain permutation |
 
 ## 🔧 System Tools
 
@@ -112,6 +113,7 @@ python3 bounty.py full URL  # Full scan everything
 | sqlmap | latest | SQL injection |
 | jwt_tool | latest | JWT cracking/analysis |
 | arjun | v2.2.7 | Hidden parameter discovery |
+| whatweb | latest | CMS & technology fingerprinting |
 
 ## 🔎 New in v10.3
 
@@ -126,6 +128,23 @@ python3 bounty.py full URL  # Full scan everything
 | git-dumper | Python | Dump exposed .git directories |
 | subjack | Go | Subdomain takeover detection |
 | S3Scanner | Python | AWS S3 bucket scanner |
+
+## 🆕 New in v11.0
+
+| Tool | Type | Description |
+|------|------|-------------|
+| CVE-2026-41940 | Python | cPanel/WHM Auth Bypass — CRLF injection → RCE (CVSS 9.8) |
+| CVE-2026-29000 | Python | pac4j-jwt Auth Bypass — JWT alg:none forge (CVSS 10.0) |
+| BlindEye | Python | OSINT username enumeration across 580+ platforms |
+| MrDork | Python | Google Dork recon framework — 308 dorks, 34 categories |
+| tplmap | Python | SSTI detection & exploitation (blind, time-based, RCE) |
+| smuggler | Python | HTTP Request Smuggling (CL.TE / TE.CL / H2.CL) |
+| SSRFmap | Python | Automated SSRF exploitation (cloud metadata, port scan, file read) |
+| alterx | Go | Subdomain permutation & alteration (ProjectDiscovery) |
+| whatweb | System | CMS & technology fingerprinting (1800+ plugins) |
+| clairvoyance | Python | GraphQL introspection bypass — brute-force schema discovery |
+| graphql-cop | Python | GraphQL security scanner (introspection, depth, batch DoS) |
+| wafw00f | Python | WAF fingerprinting (150+ WAFs) |
 
 ## 🌐 Browser Automation
 
